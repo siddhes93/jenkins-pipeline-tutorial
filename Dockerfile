@@ -3,7 +3,7 @@ FROM golang:alpine as builder
 COPY . /code
 WORKDIR /code
 
-RUN go mod init https://github.com/niranjankl/jenkins-pipeline-tutorial
+RUN go mod init github.com/niranjankl/jenkins-pipeline-tutorial
 # Run unit tests
 RUN go test
 
