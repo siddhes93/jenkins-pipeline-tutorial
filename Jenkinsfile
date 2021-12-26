@@ -7,7 +7,7 @@ pipeline {
     // pipeline's stages.
     environment {
 	    region = "us-east-1"
-        docker_repo_uri = ""
+        docker_repo_uri = "826139096630.dkr.ecr.us-east-1.amazonaws.com/sample-app"
 		task_def_arn = ""
         cluster = ""
         exec_role_arn = ""
@@ -25,5 +25,21 @@ pipeline {
                 // https://jenkins.io/doc/pipeline/steps/ .
             }
         }
+        stage('Build') {
+            steps {
+               // Get SHA1 of current commit
+               script {
+                 commit_id = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
+               }
+               // Build the Docker image
+               sh "docker build -t ${docker_repo_uri}:${commit_id} ."
+               // Get Docker login credentials for ECR
+               sh "aws ecr get-login --no-include-email --region ${region} | sh"
+               // Push Docker image
+               sh "docker push ${docker_repo_uri}:${commit_id}"
+               // Clean up
+              sh "docker rmi -f ${docker_repo_uri}:${commit_id}"
+            }
+        }	    
     }
 }
