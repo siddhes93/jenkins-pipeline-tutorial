@@ -8,7 +8,7 @@ pipeline {
     environment {
 	    region = "us-east-1"
         docker_repo_uri = "333700154479.dkr.ecr.us-east-1.amazonaws.com/sample-app"
-		task_def_arn = "arn:aws:ecs:us-east-1:333700154479:task-definition/first-run-task-definition:1"
+		task_def_arn = "arn:aws:ecs:us-east-1:333700154479:task-definition/first-run-task-definition:2"
         cluster = "default"
         exec_role_arn = "arn:aws:iam::333700154479:role/ecsTaskExecutionRole"
     }
