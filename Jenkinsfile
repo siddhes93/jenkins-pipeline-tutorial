@@ -47,8 +47,12 @@ pipeline {
              sh "sed -i 's|{{image}}|${docker_repo_uri}:${commit_id}|' taskdef.json"
              // Create a new task definition revision
              sh "aws ecs register-task-definition --execution-role-arn ${exec_role_arn} --cli-input-json file://taskdef.json --region ${region}"
-            // Update service on Fargate
-             sh "aws ecs update-service --cluster ${cluster} --service sample-app-service --task-definition ${task_def_arn} --region ${region}"
+             script {
+                    task_arn = sh(script: "aws ecs list-task-definitions --region us-east-1 | grep first-run-task-definition | tail -1", returnStdout: true).trim()
+             }
+           
+		  // Update service on Fargate
+             sh "aws ecs update-service --cluster ${cluster} --service sample-app-service --task-definition ${task_arn} --region ${region}"
            }
        }   
     }
