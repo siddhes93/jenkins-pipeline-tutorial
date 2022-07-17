@@ -7,10 +7,10 @@ pipeline {
     // pipeline's stages.
     environment {
 	    region = "us-east-1"
-        docker_repo_uri = "466037112537.dkr.ecr.us-east-1.amazonaws.com/sample-app"
-//		task_def_arn = "arn:aws:ecs:us-east-1:333700154479:task-definition/first-run-task-definition:2"
-//        cluster = "default"
-//        exec_role_arn = "arn:aws:iam::333700154479:role/ecsTaskExecutionRole"
+             docker_repo_uri = "466037112537.dkr.ecr.us-east-1.amazonaws.com/sample-app"
+             task_def_arn = "arn:aws:ecs:us-east-1:333700154479:task-definition/first-run-task-definition:2"
+            cluster = "sample-app"
+             exec_role_arn = "arn:aws:iam::466037112537:role/ecsTaskExecutionRole"
     }
     
     // Here you can define one or more stages for your pipeline.
